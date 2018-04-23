@@ -1,0 +1,31 @@
+<template name="info">
+    <div class="info">
+        {{#if updating}}
+        <form class="update-box">
+            <span>
+                <input type="text" name="text" placeholder="Couleur" />
+            </span>
+            <span>
+                <input type="text" name="rank" placeholder="Millésime" />
+            </span>
+            <span>
+                <input type="text" name="pos" placeholder="Référence" />
+            </span>
+            <span>
+                <input type="text" name="layer" placeholder="Format" />
+            </span>
+            <span>
+                <input type="submit" value="Mettre à jour" />
+            </span>
+        </form>
+        {{else}}
+        <ul>
+            <li>Couleur : Rouge</li>
+            <li>Millésime : 2015</li>
+            <li>Référence : Luchey-Halde</li>
+            <li>Type : Bouteille</li>
+        </ul>
+        <button class="update">Modifier</button>
+        {{/if}}
+    </div>
+</template>

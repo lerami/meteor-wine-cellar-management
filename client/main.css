@@ -1,0 +1,291 @@
+/* CSS declarations go here */
+
+
+section {
+  padding: 0;
+}
+
+.search {
+
+  height: 55px;
+  position: fixed;
+  background-color: #fff;
+  top: 40%;
+
+  z-index: 1000;
+  transition: 0.5s;
+  box-shadow: 0px 1px 3px #818181;
+  border-radius: 5px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  padding: 17.5px 10px 15px 10px;
+  font-size: 20px;
+  color: #797979;
+  cursor: pointer;
+}
+
+.search-cy {
+  width: 420px;
+  left: -355px;
+}
+
+.search-cy:hover {
+  left: -345px;
+  color: #494949;
+}
+
+.search-ref {
+  width: 350px;
+  left: -285px;
+}
+
+.search-ref:hover {
+  left: -275px;
+  color: #494949;
+}
+
+#search-by-cy, #search-by-ref {
+  position: relative;
+  display: inline;
+  font-size: 12px;
+}
+
+
+.map {
+    position: relative;
+    top: 0;
+    height: 100vh;
+    min-height: 700px;
+    margin: 100px;
+    float: left;
+    background: #f1f1f1;
+    position: relative;
+    transform: scale(0.5);
+  }
+
+  .box-infos {
+    position: relative;
+    padding: 20px;
+    color: rgb(56, 56, 56);
+    box-shadow: 0px 1px 2px #818181;
+    border-radius: 10px;
+    left: 15vw;
+    transition: 0.5s;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  #info-content {
+    -webkit-transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
+    -ms-transition: opacity .5s ease-in-out;
+    -o-transition: opacity .5s ease-in-out;
+    transition: opacity .5s ease-in-out;
+  }
+
+  .box-infos ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .box-infos li {
+    padding-top: 10px;
+    border-bottom: 1px #818181;
+  }
+
+  .res-search {
+    top: 20px;
+    font-size: 10px;
+  }
+
+  #overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0); /* Black background with opacity */
+    z-index: 800; /* Specify a stack order in case you're using a different order for other elements */
+    transition: 0.5s;
+  }
+  
+/* MAPPING DE LA CAVE */
+
+
+.arrow-up, .arrow-down, .reset {
+  padding: 10px 11px 7px 11px;
+  color: rgb(124, 124, 124);
+  background-color: rgb(235, 235, 235);
+  box-shadow: 0px 0px 1px #818181;
+  border-radius: 30px;
+  width: min-content;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.arrow-up:hover, .arrow-down:hover, .reset:hover {
+  color: rgb(80, 80, 80);
+}
+
+/* .adding-button, .removing-button {
+  padding: 10px;
+  color: rgb(190, 190, 190);
+  background-color: rgb(68, 67, 67);
+  box-shadow: 0px 0px 1px #818181;
+  border-radius: 15px;
+  width: min-content;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+} */
+
+  .cube {
+    position: absolute;
+  }
+
+  .cube:hover .rightFace, .cube:hover .leftFace, .cube:hover .topFace div {
+    cursor: pointer;
+  }
+  
+  
+  .rightFace,
+  .leftFace,
+  .topFace div {
+    padding: 10px;
+    width: 60px;
+    height: 60px;
+    line-height: initial;
+    box-sizing: initial;
+  }
+  
+  .rightFace,
+  .leftFace,
+  .topFace {
+    position: absolute;
+  }
+  
+  .selectedTop div, .selectedRight, .selectedLeft {
+    -moz-animation:blink normal 1.5s infinite ease-in-out; 
+    -webkit-animation:blink normal 1.5s infinite ease-in-out; 
+    -ms-animation:blink normal 1.5s infinite ease-in-out; 
+    animation:blink normal 1.5s infinite ease-in-out; 
+  }
+
+  @-moz-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Firefox */
+  @-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Webkit */
+  @-ms-keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* IE */
+  @keyframes blink {0%{opacity:1;} 50%{opacity:0.5;} 100%{opacity:1;}} /* Opera */
+
+  .leftFace {
+    -webkit-transform: skewY(30deg);
+    -moz-transform: skewY(30deg);
+    background-color: rgb(216, 186, 166);
+    /* rgb(216, 186, 166) */
+    /* opacity: 0.9; */
+  }
+
+  .cube:hover .leftFace {
+    background-color: rgb(233, 199, 177);
+    /* rgb(233, 199, 177)*/
+  }
+
+  .selectedLeft {
+    background-color: rgb(191, 162, 214);
+  }
+
+  .cube:hover .selectedLeft {
+    background-color: rgb(207, 178, 231);
+  }
+  
+  .matchLeft {
+    background-color: rgb(202, 139, 139); 
+  }
+
+  .cube:hover .matchLeft {
+    background-color: rgb(211, 162, 162);
+  }
+
+  .rightFace {
+    -webkit-transform: skewY(-30deg);
+    -moz-transform: skewY(-30deg);
+    background-color: rgb(233, 197, 176);
+    left: 80px;
+    /*rgb(233, 197, 176)*/
+    /* opacity: 0.9; */
+  }
+
+  .cube:hover .rightFace {
+    background-color: rgb(240, 207, 188);
+    /* rgb(240, 207, 188) */
+  }
+
+  .selectedRight {
+    background-color: rgb(221, 180, 255);
+  }
+
+  .cube:hover .selectedRight {
+    background-color: rgb(230, 200, 255);
+  }
+
+  .matchRight {
+    background-color: rgb(238, 162, 162);
+  }
+
+  .cube:hover .matchRight {
+    background-color: rgb(238, 184, 184);
+  }
+
+  .topFace div {
+    -webkit-transform: skewY(-30deg) scaleY(1.16);
+    -moz-transform: skewY(-30deg) scaleY(1.16);
+    background-color: rgb(243, 211, 190);
+    font-size: 0.862em;
+    /* rgb(243, 211, 190) */
+    /* opacity: 0.9; */
+  }
+
+  .cube:hover .topFace div {
+    background-color: rgb(248, 219, 200);
+  }
+
+  .selectedTop div {
+    background-color: rgb(210, 196, 233);
+  }
+
+  .cube:hover .selectedTop div {
+    background-color: rgb(223, 210, 243);
+  }
+
+  .matchTop div {
+    background-color: rgb(238, 175, 175);
+  }
+
+  .cube:hover .matchTop div {
+    background-color: rgb(238, 189, 189);
+  }
+  
+  .topFace {
+    -webkit-transform: rotate(60deg);
+    -moz-transform: rotate(60deg);
+    top: -63px;
+    left: 40px;
+  }
+
+  @media (max-width: 600px) {
+    li {  
+      padding: 12px 15px;
+    }
+    .search {
+      width: 150px;
+      clear: both;  
+    }
+    .new-task input {
+      padding-bottom: 5px
+    }
+  }
+  
