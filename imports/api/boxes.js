@@ -69,6 +69,23 @@ if (Meteor.isServer) {
     }
   })
 
+  Api.addRoute('boxes/search/color/:color/ref/:ref/year/:year', { authRequired: false }, {
+    get: function () {
+      var searchJson = {};
+      if (this.urlParams.color != "null"){
+        searchJson.color = this.urlParams.color;
+      }
+      if (this.urlParams.ref != "null"){
+        searchJson.ref = this.urlParams.ref;
+      }
+      if (this.urlParams.year != "null"){
+        searchJson.year = this.urlParams.year;
+      }
+      console.log(searchJson);
+      return Boxes.find(searchJson).fetch();
+    }     
+  });
+
   // Maps to: /api/boxes/:_id
   Api.addRoute('boxes/:year', { authRequired: false }, {
     get: function () {
