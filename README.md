@@ -48,13 +48,15 @@ Example : Search all the "Rouge" (red) wines from 2015 (any refs)
 address-of-your-project/api/boxes/search/color/Rouge/ref/null/year/2015
 ```
 
-- Add an amount (:qty) of bottles to a specific box (:\_id) 
+- Add an amount (:qty) of bottles to a specific box (:\_id)
+
 _(NB : note that it ADDS the quantity :qty to the box :\_id ; if the previous quantity of bottles was 100 and you set :qty to 50, after your request the final quantity in the box you'll be 150)_
 ```
 address-of-your-project/api/boxes/add/:_id/:qty
 ```
 
 - Remove an amount (:qty) of bottles to a specific box (:\_id)
+
 _(NB : note that it REMOVES the quantity :qty to the box :\_id ; if the previous quantity of bottles was 100 and you set :qty to 50, after your request the final quantity in the box you'll be 50)_
 ```
 address-of-your-project/api/boxes/remove/:_id/:qty
