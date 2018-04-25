@@ -29,17 +29,17 @@ The project comes up with a [rest API]() to provide access from a remote app (mo
 
 (address-of-your-project is by default localhost:3000)
 
-- Get all the boxes
+#### Get all the boxes
 ```
 address-of-your-project/api/boxes
 ```
 
-- Get a box by its id
+#### Get a box by its id
 ```
 address-of-your-project/api/boxes/id/:_id
 ```
 
-- Get boxes by criterias. It is not obligatory to fill in all the criterias ; just write "null" in the fields you do not want to search by.
+#### Get boxes by criterias. It is not obligatory to fill in all the criterias ; just write "null" in the fields you do not want to search by.
 ```
 address-of-your-project/api/boxes/search/color/:color/ref/:ref/year/:year
 ```
@@ -48,12 +48,12 @@ Examples : Search all the "Rouge" (red) wines from 2015 (any refs)
 address-of-your-project/api/boxes/search/color/Rouge/ref/null/year/2015
 ```
 
-- Add an amount (:qty) of bottles to a specific box (:\_id) _(NB : note that it ADDS the quantity :qty to the box :_id ; if the previous quantity of bottles was 100 and you set :qty to 50, after your request the final quantity in the box you'll be 150)_
+#### Add an amount (:qty) of bottles to a specific box (:\_id) _(NB : note that it ADDS the quantity :qty to the box :\_id ; if the previous quantity of bottles was 100 and you set :qty to 50, after your request the final quantity in the box you'll be 150)_
 ```
 address-of-your-project/api/boxes/add/:_id/:qty
 ```
 
-- Remove an amount (:qty) of bottles to a specific box (:\_id) _(NB : note that it REMOVES the quantity :qty to the box :_id ; if the previous quantity of bottles was 100 and you set :qty to 50, after your request the final quantity in the box you'll be 50)_
+#### Remove an amount (:qty) of bottles to a specific box (:\_id) _(NB : note that it REMOVES the quantity :qty to the box :\_id ; if the previous quantity of bottles was 100 and you set :qty to 50, after your request the final quantity in the box you'll be 50)_
 ```
 address-of-your-project/api/boxes/remove/:_id/:qty
 ```
