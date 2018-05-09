@@ -24,7 +24,7 @@ if (Meteor.isServer) {
         };
       }
     },
-  
+
     defaultHeaders: {
       'Content-Type': 'application/json'
     },
@@ -52,7 +52,7 @@ if (Meteor.isServer) {
   });
 
   // Generates: GET on /api/boxes, GET on
-  // /api/boxes/:_id and PATCH on 
+  // /api/boxes/:_id and PATCH on
   // /api/boxes/:_id/add(remove)/:qty for the Boxes collection
   Api.addCollection(Boxes);
 
@@ -65,7 +65,7 @@ if (Meteor.isServer) {
 
   Api.addRoute('boxes/id/:_id', { authRequired: false }, {
     get: function() {
-      return Boxes.findOne(this.urlParams._id );
+      return Boxes.findOne({_id: this.urlParams._id});
     }
   })
 
@@ -83,14 +83,14 @@ if (Meteor.isServer) {
       }
       console.log(searchJson);
       return Boxes.find(searchJson).fetch();
-    }     
+    }
   });
 
   // Maps to: /api/boxes/:_id
   Api.addRoute('boxes/:year', { authRequired: false }, {
     get: function () {
       return Boxes.find({ year: this.urlParams.year }).fetch();
-    }     
+    }
   });
 
   // Maps to: /api/boxes/add/:_id/:qty
@@ -98,8 +98,8 @@ if (Meteor.isServer) {
     patch: function () {
       var data = Boxes.findOne(this.urlParams._id);
       var newQty = data.qty + Number(this.urlParams.qty);
-      Meteor.call('boxes.update', data._id, newQty);
-      return data; 
+      Meteor.call('boxes.updateQty', data._id, newQty);
+      return Boxes.findOne(this.urlParams._id);
     }
   });
 
@@ -108,8 +108,35 @@ if (Meteor.isServer) {
     patch: function () {
       var data = Boxes.findOne(this.urlParams._id);
       var newQty = data.qty - Number(this.urlParams.qty);
-      Meteor.call('boxes.update', data._id, newQty); 
-      return data;
+      Meteor.call('boxes.updateQty', data._id, newQty);
+      return Boxes.findOne(this.urlParams._id);
+    }
+  });
+
+  Api.addRoute('boxes/color/:_id/:color', {authRequired: false}, {
+    patch: function() {
+      var data = Boxes.findOne(this.urlParams._id);
+      var newColor = this.urlParams.color;
+      Meteor.call('boxes.updateColor', data._id, newColor);
+      return Boxes.findOne(this.urlParams._id);
+    }
+  });
+
+  Api.addRoute('boxes/ref/:_id/:ref', {authRequired: false}, {
+    patch: function() {
+      var data = Boxes.findOne(this.urlParams._id);
+      var newRef = this.urlParams.ref;
+      Meteor.call('boxes.updateRef', data._id, newRef);
+      return Boxes.findOne(this.urlParams._id);
+    }
+  });
+
+  Api.addRoute('boxes/year/:_id/:year', {authRequired: false}, {
+    patch: function() {
+      var data = Boxes.findOne(this.urlParams._id);
+      var newYear = this.urlParams.year;
+      Meteor.call('boxes.updateYear', data._id, newYear);
+      return Boxes.findOne(this.urlParams._id);
     }
   });
 }
@@ -134,11 +161,29 @@ Meteor.methods({
     });
   },
 
-  'boxes.update'(id, newqty) {
+  'boxes.updateQty'(id, newqty) {
     newqty = Number(newqty)
 
     return Boxes.update(
       id, { $set: { qty: newqty } }
+    )
+  },
+
+  'boxes.updateColor'(id, newColor) {
+    return Boxes.update(
+      id, { $set: {color: newColor } }
+    )
+  },
+
+  'boxes.updateRef'(id, newRef) {
+    return Boxes.update(
+      id, { $set: {ref: newRef } }
+    )
+  },
+
+  'boxes.updateYear'(id, newYear) {
+    return Boxes.update(
+      id, { $set: {year: newYear } }
     )
   },
 
@@ -148,4 +193,3 @@ Meteor.methods({
     Boxes.remove(boxId);
   },
 });
-
