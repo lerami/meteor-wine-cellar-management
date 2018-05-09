@@ -26,8 +26,20 @@ if (Meteor.isServer) {
     },
 
     defaultHeaders: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       'Content-Type': 'application/json'
-    },
+  },
+  defaultOptionsEndpoint: function() {
+      this.response.writeHead(201, {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      });
+      return;
+  },
     onLoggedIn: function () {
       console.log(this.user.username + ' (' + this.userId + ') logged in');
     },
@@ -35,7 +47,8 @@ if (Meteor.isServer) {
       console.log(this.user.username + ' (' + this.userId + ') logged out');
     },
     prettyJson: true,
-    useDefaultAuth: true
+    useDefaultAuth: true,
+    enableCors: true
   });
 
 
