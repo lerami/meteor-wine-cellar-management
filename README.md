@@ -66,3 +66,22 @@ _(NB : note that it REMOVES the quantity :qty to the box :\_id ; if the previous
 ```
 address-of-your-project/api/boxes/remove/:_id/:qty
 ```
+
+
+#### Change the color (:color) of bottles to a specific box (:\_id)
+
+```
+address-of-your-project/api/boxes/color/:_id/:color
+```
+
+#### Change the year (:year) of bottles to a specific box (:\_id)
+
+```
+address-of-your-project/api/boxes/year/:_id/:year
+```
+
+#### Change the reference (:ref) of bottles to a specific box (:\_id)
+
+```
+address-of-your-project/api/boxes/ref/:_id/:ref
+```
