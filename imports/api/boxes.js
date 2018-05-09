@@ -155,17 +155,19 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'boxes.insert'(color, year, ref, qty, rank, pos, layer) {
+  'boxes.insert'(id, color, year, ref, qty, format, rank, pos, layer) {
     layer = Number(layer);
     rank = Number(rank);
     pos = Number(pos);
     qty = Number(qty);
 
     return Boxes.insert({
+      _id: id,
       color,
       year,
       ref,
       qty,
+      format,
       rank,
       pos,
       layer,

@@ -8,13 +8,15 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <a href="#" class="navbar-brand" style="margin-top: 10px">Localiz'</a>
-
+                <a href="#" class="navbar-brand" style="margin-top: 10px">Localiz'</a>
+                <a id="insertBoxButton" href="#" class="navbar-text navbar-right" style="font-size: 20px">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </a>
+            </div>
         </div>
-    </div>
     </nav>
 
-   
+
     <div id="lookforcy" class="search search-cy" data-toggle="tooltip" data-placement="right" title="Recherche par couleur et millésime">
         <form id="search-by-cy" role="search" style="font-size: 12px;">
 
@@ -35,70 +37,74 @@
     <div id="lookforref" class="search search-ref" style="top:50%;" data-toggle="tooltip" data-placement="right" title="Recherche par référence">
         <form id="search-by-ref" role="search" style="font-size: 12px;">
 
-                <input type="text" name="ref" placeholder="Référence" />
+            <input type="text" name="ref" placeholder="Référence" />
             <button type="submit" class="btn btn-default">Recherche</button>
         </form>
         <span class="glyphicon glyphicon-barcode" aria-hidden="true" style="padding-left: 45px;"></span>
 
     </div>
 
+    {{#if insertNewBox}}
+        {{> insertBox}}
+    {{/if}}
+
+    <div id="dark-overlay"></div>
     <div id="overlay"></div>
     <section id="content" style="padding: 15px;">
 
 
-            <div class="col-lg-8 col-sm-12">
-                <button class="arrow-up" data-toggle="tooltip" data-placement="bottom" title="Monter les étages">
-                    <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
-                </button>
-                <button class="arrow-down" data-toggle="tooltip" data-placement="bottom" title="Descendre les étapes">
-                    <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-                </button>
-                <button class="reset" data-toggle="tooltip" data-placement="bottom" title="Réinitialiser">
-                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
-                </button>
-                <div class="map">
+        <div class="col-lg-8 col-sm-12">
+            <button class="arrow-up" data-toggle="tooltip" data-placement="bottom" title="Monter les étages">
+                <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
+            </button>
+            <button class="arrow-down" data-toggle="tooltip" data-placement="bottom" title="Descendre les étapes">
+                <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+            </button>
+            <button class="reset" data-toggle="tooltip" data-placement="bottom" title="Réinitialiser">
+                <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+            </button>
+            <div class="map">
 
-                    {{#each b in boxes}} {{> box data=b}} {{/each}}
+                {{#each b in boxes}} {{> box data=b}} {{/each}}
 
-                </div>
             </div>
+        </div>
 
-            <div class="col-lg-2 col-sm-12">
-                <div class="box-infos">
-                    {{#if adding}}
-                    <form class="adding-box">
-                        <span>
-                            <label>Combien de bouteilles avez-vous ajouté ?</label>
-                            <input type="text" name="qtyplus" placeholder="" />
-                        </span>
-                        <span>
-                            <input type="submit" value="Ajouter" />
-                        </span>
-                    </form>
-                    {{else}} {{#if removing}}
-                    <form class="removing-box">
-                        <span>
-                            <label>Combien de bouteilles avez-vous retiré ?</label>
-                            <input type="text" name="qtyminus" placeholder="" />
-                        </span>
-                        <span>
-                            <input type="submit" value="Retirer" />
-                        </span>
-                    </form>
-                    {{else}}
-                    <span class="glyphicon glyphicon-tag" aria-hidden="true" style="position: absolute; top: -10px; left: 180px; font-size: 60px; color: #494949;"></span>
-                    <ul id="info-content">
-                        <li>Couleur : {{selectedBox.color}}</li>
-                        <li>Millésime : {{selectedBox.year}}</li>
-                        <li>Référence : {{selectedBox.ref}}</li>
-                        <li>Quantité : {{selectedBox.qty}}</li>
-                    </ul>
-                    {{#if selectedBox}}
-                    <button class="adding-button">Ajout</button>
-                    <button class="removing-button">Retrait</button>
-                    {{/if}} {{/if}} {{/if}}
-                </div>
+        <div class="col-lg-2 col-sm-12">
+            <div class="box-infos">
+                {{#if adding}}
+                <form class="adding-box">
+                    <span>
+                        <label>Combien de bouteilles avez-vous ajouté ?</label>
+                        <input type="text" name="qtyplus" placeholder="" />
+                    </span>
+                    <span>
+                        <input type="submit" value="Ajouter" />
+                    </span>
+                </form>
+                {{else}} {{#if removing}}
+                <form class="removing-box">
+                    <span>
+                        <label>Combien de bouteilles avez-vous retiré ?</label>
+                        <input type="text" name="qtyminus" placeholder="" />
+                    </span>
+                    <span>
+                        <input type="submit" value="Retirer" />
+                    </span>
+                </form>
+                {{else}}
+                <ul id="info-content">
+                    <li>Couleur : {{selectedBox.color}}</li>
+                    <li>Millésime : {{selectedBox.year}}</li>
+                    <li>Référence : {{selectedBox.ref}}</li>
+                    <li>Quantité : {{selectedBox.qty}}</li>
+                </ul>
+                {{#if selectedBox}}
+                <button class="adding-button">Ajout</button>
+                <button class="removing-button">Retrait</button>
+                {{/if}} {{/if}} {{/if}}
             </div>
+        </div>
 
     </section>
 

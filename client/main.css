@@ -74,6 +74,20 @@ section {
     font-family: 'Open Sans', sans-serif;
   }
 
+  .new-box {
+    position: relative;
+    left: -50%;
+     margin: 0 auto;
+     width: 500px; 
+     padding: 20px;
+     color: rgb(56, 56, 56);
+     box-shadow: 0px 1px 2px #818181;
+     background-color: #fff;
+     border-radius: 10px;
+     z-index: 1200;
+     font-family: 'Open Sans', sans-serif;
+  }
+
   #info-content {
     -webkit-transition: opacity .5s ease-in-out;
     -moz-transition: opacity .5s ease-in-out;
@@ -108,6 +122,20 @@ section {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0); /* Black background with opacity */
     z-index: 800; /* Specify a stack order in case you're using a different order for other elements */
+    transition: 0.5s;
+  }
+
+  #dark-overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* Black background with opacity */
+    z-index: 1001; /* Specify a stack order in case you're using a different order for other elements */
     transition: 0.5s;
   }
   

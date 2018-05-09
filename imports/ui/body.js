@@ -4,11 +4,13 @@ import { Session } from 'meteor/session';
 
 import './body.html';
 import './box.js';
+import './insertBox.js';
 
 Session.set('selectedLayer', 2);
 Session.set('adding', false);
 Session.set('removing', false);
 Session.set('selectedBox', );
+Session.set('insertNewBox', false);
 
 Template.body.onCreated(function bodyOnCreated() {
   Meteor.subscribe('box');
@@ -30,6 +32,9 @@ Template.body.helpers({
   },
   selectedBox() {
     return Session.get('selectedBox');
+  },
+  insertNewBox() {
+    return Session.get('insertNewBox');
   },
   nbMatch() {
     return Session.get('nbMatch');
@@ -68,32 +73,14 @@ Template.body.events({
     $("#overlay").hide();
   },
 
-  'submit .new-box'(event) {
+  'click #insertBoxButton'(event) {
+    Session.set('insertNewBox',true);
+    $("#dark-overlay").show();
+  },
 
-    // Prevent default browser form submit
-    event.preventDefault();
-
-    // Get value from form element
-    const target = event.target;
-    const color = target.color.value;
-    const year = target.year.value;
-    const ref = target.ref.value;
-    const qty = target.qty.value;
-    const rank = target.rank.value;
-    const pos = target.pos.value;
-    const layer = target.layer.value;
-
-    // Insert a task into the collection
-    Meteor.call('boxes.insert', color, year, ref, qty, rank, pos, layer);
-
-    // Clear form
-    target.color.value = '';
-    target.year.value = '';
-    target.ref.value = '';
-    target.qty.value = '';
-    target.rank.value = '';
-    target.pos.value = '';
-    target.layer.value = '';
+  'click #dark-overlay'(event) {
+    Session.set('insertNewBox', false);
+    $("#dark-overlay").hide();
   },
 
   'submit #search-by-ref'(event) {
