@@ -9,7 +9,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <a href="#" class="navbar-brand" style="margin-top: 10px">Localiz'</a>
-                <a id="insertBoxButton" href="#" class="navbar-text navbar-right" style="font-size: 20px">
+                <a id="insertBoxButton" class="navbar-text navbar-right">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
             </div>
@@ -43,10 +43,8 @@
         <span class="glyphicon glyphicon-barcode" aria-hidden="true" style="padding-left: 45px;"></span>
 
     </div>
+    
 
-    {{#if insertNewBox}}
-        {{> insertBox}}
-    {{/if}}
 
     <div id="dark-overlay"></div>
     <div id="overlay"></div>
@@ -97,6 +95,7 @@
                     <li>Couleur : {{selectedBox.color}}</li>
                     <li>Millésime : {{selectedBox.year}}</li>
                     <li>Référence : {{selectedBox.ref}}</li>
+                    <li>Format : {{selectedBox.format}}</li>
                     <li>Quantité : {{selectedBox.qty}}</li>
                 </ul>
                 {{#if selectedBox}}
@@ -108,11 +107,4 @@
 
     </section>
 
-    <script>
-        $('#lookforcy').tooltip()
-        $('#lookforref').tooltip()
-        $('.arrow-up').tooltip()
-        $('.arrow-down').tooltip()
-        $('.reset').tooltip()
-    </script>
 </body>

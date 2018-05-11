@@ -4,9 +4,10 @@ import { Boxes } from '../api/boxes.js';
 
 import './insertBox.html';
 
-Template.box.events({
-    'submit form.new-box'(event) {
+Template.insertBox.events({
 
+    'submit #insertForm'(event) {
+        console.log(event)
         // Prevent default browser form submit
         event.preventDefault();
 
@@ -23,7 +24,23 @@ Template.box.events({
         const layer = target.layer.value;
     
         // Insert a task into the collection
-        Meteor.call('boxes.insert', id, color, year, ref, qty, format, rank, pos, layer);
+        Meteor.call('boxes.insert', id, color, year, ref, qty, format, rank, pos, layer,(err,res)=>{
+            if (err) {
+                swal("Il y a eu une erreur!", "Veuillez vérifier que les informations saisies sont correctes.", "error");
+            } else {
+                swal({
+                    title: "La palox a été ajouté avec succès!",
+                    text: "Vous pouvez maintenant télécharger le QR code à imprimer et coller sur la palox!",
+                    icon: "success",
+                    button: true
+                  })
+                  .then((willUpload) => {
+                    if (willUpload) {
+                      swal("Le téléchargement va commencer...");
+                  }
+                });
+            }
+        });
     
         // Clear form
         target.id.value = '';

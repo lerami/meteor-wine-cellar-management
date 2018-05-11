@@ -1,48 +1,92 @@
 <template name="insertBox">
-    <div style="position: absolute; left: 50%">
-        <form class="new-box">
-            <span>
-                <label>ID palox</label>
-                <input type="text" name="id" placeholder="ID palox" />
-            </span>
-            <span>
-                <label>Référence</label>
-                <input type="text" name="ref" placeholder="Référence" />
-            </span>
-            <span>
-                <label>Millésime</label>
-                <input type="text" name="year" placeholder="Millésime" />
-            </span>
-            <span>
-                <label>Couleur</label>
-                <input type="text" name="color" placeholder="Couleur" />
-            </span>
-            <span>
-                <label>Format</label>
-                <input type="text" name="format" placeholder="Format" />
-            </span>
-            <span>
-                <label>Quantité</label>
-                <input type="text" name="qty" placeholder="Quantité" />
-            </span>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-            <span>
-                <label>Rangée</label>
-                <input type="text" name="rank" placeholder="Rangée" />
-            </span>
-            <span>
-                <label>Position</label>
-                <input type="text" name="pos" placeholder="Position" />
-            </span>
-            <span>
-                <label>Niveau</label>
-                <input type="text" name="level" placeholder="Niveau" />
-            </span>
+                <div class="modal-header">
+                    <h4 class="modal-title">Ajouter une nouvelle palox</h4>
+                </div>
 
-            <span>
-                <input type="submit" value="Ajouter" />
-            </span>
+                <div class="modal-body">
+                    <form id="insertForm" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="defaultForm-id" class="col-sm-2 control-label">ID palox</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="defaultForm-id" name="id" placeholder="ID palox">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-color" class="col-sm-2 control-label">Couleur</label>
+                            <div class="col-sm-10">
+                                <select id="defaultForm-color" class="form-control" name="color">
+                                    <option value="Rouge">Rouge</option>
+                                    <option value="Blanc">Blanc</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-year" class="col-sm-2 control-label">Millésime</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="defaultForm-year" name="year" placeholder="Millésime">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-ref" class="col-sm-2 control-label">Référence</label>
+                            <div class="col-sm-10">
+                                <select id="defaultForm-ref" class="form-control" name="ref">
+                                    <option value="Luchey-Halde">Luchey-Halde</option>
+                                    <option value="Les Haldes de Luchey">Les Haldes de Luchey</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-format" class="col-sm-2 control-label">Format</label>
+                            <div class="col-sm-10">
+                                <select id="defaultForm-format" class="form-control" name="format">
+                                    <option value="Bouteille">Bouteille</option>
+                                    <option value="Demi bouteille">Demi bouteille</option>
+                                    <option value="Magnum">Magnum</option>
+                                    <option value="Double magnum">Double magnum</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-qty" class="col-sm-2 control-label">Quantité</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="defaultForm-qty" name="qty" placeholder="Quantité">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-rank" class="col-sm-2 control-label">Rangée</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="defaultForm-rank" name="rank" placeholder="Rangée">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-pos" class="col-sm-2 control-label">Position</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="defaultForm-pos" name="pos" placeholder="Rangée">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="defaultForm-layer" class="col-sm-2 control-label">Hauteur</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="defaultForm-layer" name="layer" placeholder="Rangée">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Ajouter une palox</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-        </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 </template>
