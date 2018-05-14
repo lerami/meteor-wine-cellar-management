@@ -27,13 +27,7 @@ Template.insertBox.events({
         // Insert a task into the collection
         Meteor.call('boxes.insert', id, color, year, ref, qty, format, rank, pos, layer, (err, res) => {
             if (err) {
-                console.log(err.error)
-                if (err.error === 500) {
-                    swal("Il y a eu une erreur!", "L'ID " + id + " a déjà été attribué.", "error");
-                }
-                else {
-                    swal("Il y a eu une erreur!", "Veuillez vérifier que les informations saisies sont correctes.", "error");
-                }
+                swal("Il y a eu une erreur!", "Veuillez vérifier que les informations saisies sont correctes.", "error");
             } else {
                 QRCode.toDataURL(id, function (err, url) {
                     swal({
