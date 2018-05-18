@@ -16,14 +16,14 @@ if (Meteor.isServer) {
 
   // Global API configuration
   var Api = new Restivus({
-    auth: {
-      user: function () {
-        return {
-          userId: this.request.headers['x-user-id'],
-          token: Accounts._hashLoginToken(this.request.headers['x-auth-token'])
-        };
-      }
-    },
+    // auth: {
+    //   user: function () {
+    //     return {
+    //       userId: this.request.headers['x-user-id'],
+    //       token: Accounts._hashLoginToken(this.request.headers['x-auth-token'])
+    //     };
+    //   }
+    // },
 
     defaultHeaders: {
       'Access-Control-Allow-Origin': '*',
@@ -40,28 +40,15 @@ if (Meteor.isServer) {
       });
       return;
   },
-    onLoggedIn: function () {
-      console.log(this.user.username + ' (' + this.userId + ') logged in');
-    },
-    onLoggedOut: function () {
-      console.log(this.user.username + ' (' + this.userId + ') logged out');
-    },
+    // onLoggedIn: function () {
+    //   console.log(this.user.username + ' (' + this.userId + ') logged in');
+    // },
+    // onLoggedOut: function () {
+    //   console.log(this.user.username + ' (' + this.userId + ') logged out');
+    // },
     prettyJson: true,
     useDefaultAuth: true,
     enableCors: true
-  });
-
-
-  Api.addCollection(Meteor.users, {
-    excludedEndpoints: ['put','delete','patch'],
-    routeOptions: {
-      authRequired: false
-    },
-    endpoints: {
-      post: {
-        authRequired: false
-      }
-    }
   });
 
   // Generates: GET on /api/boxes, GET on
@@ -76,13 +63,20 @@ if (Meteor.isServer) {
     }
   });
 
+  Api.addRoute('boxes/update/id/:_id/rank/:rank/pos/:pos/layer/:layer', { authRequired: false }, {
+    put: function() {
+      Meteor.call('boxes.updatePosition',this.urlParams._id, this.urlParams.rank, this.urlParams.pos, this.urlParams.layer);
+      return Boxes.findOne(this.urlParams.id)
+    }
+  })
+
   Api.addRoute('boxes/id/:_id', { authRequired: false }, {
     get: function() {
       return Boxes.findOne({_id: this.urlParams._id});
     }
   })
 
-  Api.addRoute('boxes/search/color/:color/ref/:ref/year/:year', { authRequired: false }, {
+  Api.addRoute('boxes/search/color/:color/ref/:ref/year/:year/format/:format', { authRequired: false }, {
     get: function () {
       var searchJson = {};
       if (this.urlParams.color != "null"){
@@ -94,15 +88,10 @@ if (Meteor.isServer) {
       if (this.urlParams.year != "null"){
         searchJson.year = this.urlParams.year;
       }
-      console.log(searchJson);
+      if (this.urlParams.format != "null"){
+        searchJson.format = this.urlParams.format;
+      }
       return Boxes.find(searchJson).fetch();
-    }
-  });
-
-  // Maps to: /api/boxes/:_id
-  Api.addRoute('boxes/:year', { authRequired: false }, {
-    get: function () {
-      return Boxes.find({ year: this.urlParams.year }).fetch();
     }
   });
 
@@ -199,6 +188,12 @@ Meteor.methods({
   'boxes.updateYear'(id, newYear) {
     return Boxes.update(
       id, { $set: {year: newYear } }
+    )
+  },
+
+  'boxes.updatePosition'(id, newRank, newPos, newLayer){
+    return Boxes.update(
+      id, { $set: {rank: newRank, pos: newPos, layer: newLayer}}
     )
   },
 
