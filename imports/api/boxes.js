@@ -16,36 +16,29 @@ if (Meteor.isServer) {
 
   // Global API configuration
   var Api = new Restivus({
-    // auth: {
-    //   user: function () {
-    //     return {
-    //       userId: this.request.headers['x-user-id'],
-    //       token: Accounts._hashLoginToken(this.request.headers['x-auth-token'])
-    //     };
-    //   }
-    // },
-
     defaultHeaders: {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Content-Type': 'application/json'
-  },
-  defaultOptionsEndpoint: function() {
-      this.response.writeHead(201, {
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+    },
+    defaultOptionsEndpoint: {
+      action: function () {
+        this.response.writeHead(201, {
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      });
-      return;
-  },
-    // onLoggedIn: function () {
-    //   console.log(this.user.username + ' (' + this.userId + ') logged in');
-    // },
-    // onLoggedOut: function () {
-    //   console.log(this.user.username + ' (' + this.userId + ') logged out');
-    // },
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS'
+        });
+        this.done();
+        return {
+          status: "success",
+          "data": {
+            "message": "We love OPTIONS"
+          }
+        };
+      }
+    },
     prettyJson: true,
     useDefaultAuth: true,
     enableCors: true
@@ -58,37 +51,42 @@ if (Meteor.isServer) {
 
   // Maps to: /api/boxes
   Api.addRoute('boxes', { authRequired: false }, {
-    get: function() {
+    get: function () {
       return Boxes.find().fetch();
     }
   });
 
   Api.addRoute('boxes/update/id/:_id/rank/:rank/pos/:pos/layer/:layer', { authRequired: false }, {
-    put: function() {
-      Meteor.call('boxes.updatePosition',this.urlParams._id, this.urlParams.rank, this.urlParams.pos, this.urlParams.layer);
-      return Boxes.findOne(this.urlParams.id)
+    put: function () {
+      if (this.urlParams._id === "0") {
+        Meteor.call('boxes.removePosition', this.urlParams.rank, this.urlParams.pos, this.urlParams.layer)
+        return "Success";
+      } else {
+        Meteor.call('boxes.updatePosition', this.urlParams._id, this.urlParams.rank, this.urlParams.pos, this.urlParams.layer);
+        return Boxes.findOne(this.urlParams._id)
+      }
     }
   })
 
   Api.addRoute('boxes/id/:_id', { authRequired: false }, {
-    get: function() {
-      return Boxes.findOne({_id: this.urlParams._id});
+    get: function () {
+      return Boxes.findOne({ _id: this.urlParams._id });
     }
   })
 
   Api.addRoute('boxes/search/color/:color/ref/:ref/year/:year/format/:format', { authRequired: false }, {
     get: function () {
       var searchJson = {};
-      if (this.urlParams.color != "null"){
+      if (this.urlParams.color != "null") {
         searchJson.color = this.urlParams.color;
       }
-      if (this.urlParams.ref != "null"){
+      if (this.urlParams.ref != "null") {
         searchJson.ref = this.urlParams.ref;
       }
-      if (this.urlParams.year != "null"){
+      if (this.urlParams.year != "null") {
         searchJson.year = this.urlParams.year;
       }
-      if (this.urlParams.format != "null"){
+      if (this.urlParams.format != "null") {
         searchJson.format = this.urlParams.format;
       }
       return Boxes.find(searchJson).fetch();
@@ -115,8 +113,8 @@ if (Meteor.isServer) {
     }
   });
 
-  Api.addRoute('boxes/color/:_id/:color', {authRequired: false}, {
-    patch: function() {
+  Api.addRoute('boxes/color/:_id/:color', { authRequired: false }, {
+    patch: function () {
       var data = Boxes.findOne(this.urlParams._id);
       var newColor = this.urlParams.color;
       Meteor.call('boxes.updateColor', data._id, newColor);
@@ -124,8 +122,8 @@ if (Meteor.isServer) {
     }
   });
 
-  Api.addRoute('boxes/ref/:_id/:ref', {authRequired: false}, {
-    patch: function() {
+  Api.addRoute('boxes/ref/:_id/:ref', { authRequired: false }, {
+    patch: function () {
       var data = Boxes.findOne(this.urlParams._id);
       var newRef = this.urlParams.ref;
       Meteor.call('boxes.updateRef', data._id, newRef);
@@ -133,8 +131,8 @@ if (Meteor.isServer) {
     }
   });
 
-  Api.addRoute('boxes/year/:_id/:year', {authRequired: false}, {
-    patch: function() {
+  Api.addRoute('boxes/year/:_id/:year', { authRequired: false }, {
+    patch: function () {
       var data = Boxes.findOne(this.urlParams._id);
       var newYear = this.urlParams.year;
       Meteor.call('boxes.updateYear', data._id, newYear);
@@ -175,25 +173,38 @@ Meteor.methods({
 
   'boxes.updateColor'(id, newColor) {
     return Boxes.update(
-      id, { $set: {color: newColor } }
+      id, { $set: { color: newColor } }
     )
   },
 
   'boxes.updateRef'(id, newRef) {
     return Boxes.update(
-      id, { $set: {ref: newRef } }
+      id, { $set: { ref: newRef } }
     )
   },
 
   'boxes.updateYear'(id, newYear) {
     return Boxes.update(
-      id, { $set: {year: newYear } }
+      id, { $set: { year: newYear } }
     )
   },
 
-  'boxes.updatePosition'(id, newRank, newPos, newLayer){
+  'boxes.updatePosition'(id, newRank, newPos, newLayer) {
+    newRank = Number(newRank)
+    newPos = Number(newPos)
+    newLayer = Number(newLayer)
     return Boxes.update(
-      id, { $set: {rank: newRank, pos: newPos, layer: newLayer}}
+      id, { $set: { rank: newRank, pos: newPos, layer: newLayer } }
+    )
+  },
+
+  'boxes.removePosition'(rank, pos, layer) {
+    rank = Number(rank)
+    pos = Number(pos)
+    layer = Number(layer)
+    var id = Boxes.findOne({rank: rank, pos: pos, layer: layer})._id;
+    return Boxes.update(
+      id, { $set: { rank: -999, pos: -999, layer: -999 } }
     )
   },
 

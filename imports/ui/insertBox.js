@@ -20,9 +20,9 @@ Template.insertBox.events({
         const ref = target.ref.value;
         const qty = target.qty.value;
         const format = target.format.value;
-        const rank = target.rank.value;
-        const pos = target.pos.value;
-        const layer = target.layer.value;
+        const rank = "-999";
+        const pos = "-999";
+        const layer = "-999";
 
         // Insert a task into the collection
         Meteor.call('boxes.insert', id, color, year, ref, qty, format, rank, pos, layer, (err, res) => {
